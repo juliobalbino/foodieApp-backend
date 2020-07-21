@@ -7,7 +7,9 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
+import com.foodie.foodieApp.entities.Restaurante;
 import com.foodie.foodieApp.entities.Usuario;
+import com.foodie.foodieApp.repositories.RestauranteRepository;
 import com.foodie.foodieApp.repositories.UsuarioRepository;
 
 @Configuration
@@ -16,6 +18,9 @@ public class TestConfig implements CommandLineRunner{
 
 	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private RestauranteRepository restauranteRepository;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -24,5 +29,10 @@ public class TestConfig implements CommandLineRunner{
 		Usuario u2 = new Usuario(null, "Alex Brown", "alex@gmail.com", "123");
 		
 		usuarioRepository.saveAll(Arrays.asList(u1, u2));
+		
+		Restaurante r1 = new Restaurante(null, "Paris6", "Jantar", 20);
+		Restaurante r2 = new Restaurante(null, "Outback", "Jantar/Almoço", 18);
+		
+		restauranteRepository.saveAll(Arrays.asList(r1, r2));
 	}
 }
