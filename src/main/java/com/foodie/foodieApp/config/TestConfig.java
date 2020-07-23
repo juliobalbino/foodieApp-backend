@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.foodie.foodieApp.entities.Restaurante;
 import com.foodie.foodieApp.entities.Usuario;
+import com.foodie.foodieApp.entities.enums.RestauranteTipo;
 import com.foodie.foodieApp.repositories.RestauranteRepository;
 import com.foodie.foodieApp.repositories.UsuarioRepository;
 
@@ -30,8 +31,8 @@ public class TestConfig implements CommandLineRunner{
 		
 		usuarioRepository.saveAll(Arrays.asList(u1, u2));
 		
-		Restaurante r1 = new Restaurante(null, "Paris6", "Jantar", 20);
-		Restaurante r2 = new Restaurante(null, "Outback", "Jantar/Almoço", 18);
+		Restaurante r1 = new Restaurante(null, "Paris6", RestauranteTipo.JANTAR, 20);
+		Restaurante r2 = new Restaurante(null, "Outback", RestauranteTipo.ALMOCO, 18);
 		
 		restauranteRepository.saveAll(Arrays.asList(r1, r2));
 	}

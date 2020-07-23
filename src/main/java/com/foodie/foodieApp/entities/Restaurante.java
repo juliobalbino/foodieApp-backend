@@ -1,27 +1,33 @@
 package com.foodie.foodieApp.entities;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import com.foodie.foodieApp.entities.enums.RestauranteTipo;
+
 @Entity
-public class Restaurante {
+public class Restaurante implements Serializable{
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	private String tipo;
 	private Integer pontuacaoMedia;
+	
+	private Integer restauranteTipo;
 	
 	public Restaurante() {
 	}
 
-	public Restaurante(Integer id, String nome, String tipo, Integer pontuacaoMedia) {
+	public Restaurante(Integer id, String nome, RestauranteTipo restauranteTipo, Integer pontuacaoMedia) {
 		this.id = id;
 		this.nome = nome;
-		this.tipo = tipo;
+		setRestauranteTipo(restauranteTipo);
 		this.pontuacaoMedia = pontuacaoMedia;
 	}
 
@@ -41,12 +47,14 @@ public class Restaurante {
 		this.nome = nome;
 	}
 
-	public String getTipo() {
-		return tipo;
+	public RestauranteTipo getRestauranteTipo() {
+		return RestauranteTipo.valueOf(restauranteTipo);
 	}
 
-	public void setTipo(String tipo) {
-		this.tipo = tipo;
+	public void setRestauranteTipo(RestauranteTipo restauranteTipo) {
+		if (restauranteTipo != null) {
+			this.restauranteTipo = restauranteTipo.getCode();
+		}
 	}
 
 	public Integer getPontuacaoMedia() {
