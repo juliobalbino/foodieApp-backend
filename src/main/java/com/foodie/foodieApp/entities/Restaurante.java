@@ -1,7 +1,12 @@
 package com.foodie.foodieApp.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,15 +24,16 @@ public class Restaurante implements Serializable{
 	private String nome;
 	private Integer pontuacaoMedia;
 	
-	private Integer restauranteTipo;
-	
+	@ElementCollection
+	@CollectionTable(name = "Tipo_Restaurante")
+	private Set<Integer> tiposRestaurante = new HashSet<>();
+
 	public Restaurante() {
 	}
 
-	public Restaurante(Integer id, String nome, RestauranteTipo restauranteTipo, Integer pontuacaoMedia) {
+	public Restaurante(Integer id, String nome, Integer pontuacaoMedia) {
 		this.id = id;
 		this.nome = nome;
-		setRestauranteTipo(restauranteTipo);
 		this.pontuacaoMedia = pontuacaoMedia;
 	}
 
@@ -46,15 +52,13 @@ public class Restaurante implements Serializable{
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
-	public RestauranteTipo getRestauranteTipo() {
-		return RestauranteTipo.valueOf(restauranteTipo);
+	
+	public Set<RestauranteTipo> getTiposRestaurante() {
+		return tiposRestaurante.stream().map(x -> RestauranteTipo.toEnum(x)).collect(Collectors.toSet());
 	}
-
-	public void setRestauranteTipo(RestauranteTipo restauranteTipo) {
-		if (restauranteTipo != null) {
-			this.restauranteTipo = restauranteTipo.getCode();
-		}
+	
+	public void addRestauranteTipo(RestauranteTipo tipoRestaurante) {
+		tiposRestaurante.add(tipoRestaurante.getCode());
 	}
 
 	public Integer getPontuacaoMedia() {

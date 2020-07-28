@@ -37,6 +37,7 @@ public class Critica implements Serializable{
 		setRestauranteTipo(tipoDeRefeicao);
 		this.corpo = corpo;
 		this.curtidas = curtidas;
+		this.data = data;
 	}
 
 	public Integer getId() {
