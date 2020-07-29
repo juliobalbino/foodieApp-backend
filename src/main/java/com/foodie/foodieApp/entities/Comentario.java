@@ -7,6 +7,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -22,13 +24,28 @@ public class Comentario implements Serializable{
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant data;
 	
+	@ManyToOne
+	@JoinColumn(name = "restaurante_id")
+	private Restaurante restaurante;
+	
+	@ManyToOne
+	@JoinColumn(name = "critica_id")
+	private Critica critica;
+	
+	@ManyToOne
+	@JoinColumn(name = "autor_id")
+	private Usuario autor;
+	
 	public Comentario() {
 	}
 
-	public Comentario(Integer id, String texto, Instant data) {
+	public Comentario(Integer id, String texto, Instant data, Restaurante restaurante, Critica critica, Usuario autor) {
 		this.id = id;
 		this.texto = texto;
 		this.data = data;
+		this.restaurante = restaurante;
+		this.critica = critica;
+		this.autor = autor;
 	}
 
 	public Integer getId() {
@@ -53,6 +70,30 @@ public class Comentario implements Serializable{
 
 	public void setData(Instant data) {
 		this.data = data;
+	}
+	
+	public Restaurante getRestaurante() {
+		return restaurante;
+	}
+
+	public void setRestaurante(Restaurante restaurante) {
+		this.restaurante = restaurante;
+	}
+
+	public Critica getCritica() {
+		return critica;
+	}
+
+	public void setCritica(Critica critica) {
+		this.critica = critica;
+	}
+	
+	public Usuario getAutor() {
+		return autor;
+	}
+
+	public void setAutor(Usuario autor) {
+		this.autor = autor;
 	}
 
 	@Override
@@ -79,4 +120,5 @@ public class Comentario implements Serializable{
 			return false;
 		return true;
 	}
+
 }

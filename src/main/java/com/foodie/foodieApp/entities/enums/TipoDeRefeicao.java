@@ -1,6 +1,6 @@
 package com.foodie.foodieApp.entities.enums;
 
-public enum RestauranteTipo {
+public enum TipoDeRefeicao {
 
 	CAFE_DA_MANHA(1),
 	ALMOCO(2),
@@ -9,7 +9,7 @@ public enum RestauranteTipo {
 
 	private int code;
 
-	private RestauranteTipo(int code) {
+	private TipoDeRefeicao(int code) {
 		this.code = code;
 	}
 
@@ -17,13 +17,13 @@ public enum RestauranteTipo {
 		return code;
 	}
 
-	public static RestauranteTipo toEnum(Integer code) {
+	public static TipoDeRefeicao toEnum(Integer code) {
 
 		if (code == null) {
 			return null;
 		}
 
-		for (RestauranteTipo x : RestauranteTipo.values()) {
+		for (TipoDeRefeicao x : TipoDeRefeicao.values()) {
 			if (code.equals(x.getCode())) {
 				return x;
 			}
@@ -31,13 +31,13 @@ public enum RestauranteTipo {
 		throw new IllegalArgumentException("Id inválido: " + code);
 	}
 
-	public static RestauranteTipo valueOf(int code) {
-		for (RestauranteTipo value : RestauranteTipo.values()) {
+	public static TipoDeRefeicao valueOf(int code) {
+		for (TipoDeRefeicao value : TipoDeRefeicao.values()) {
 			if (value.getCode() == code) {
 				return value;
 			}
 		}
-		throw new IllegalArgumentException("Codigo de RestauranteTipo inválido");
+		throw new IllegalArgumentException("Codigo de TipoDeRefeicao inválido");
 	}
 
 }

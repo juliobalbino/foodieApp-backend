@@ -1,11 +1,16 @@
 package com.foodie.foodieApp.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Usuario implements Serializable{
@@ -17,6 +22,14 @@ public class Usuario implements Serializable{
 	private String nome;
 	private String email;
 	private String senha;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "autor")
+	private List<Critica> criticas = new ArrayList<>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "autor")
+	private List<Comentario> comentarios = new ArrayList<>();
 	
 	public Usuario() {
 	}
@@ -58,6 +71,22 @@ public class Usuario implements Serializable{
 
 	public void setSenha(String senha) {
 		this.senha = senha;
+	}
+	
+	public List<Critica> getCriticas() {
+		return criticas;
+	}
+
+	public void setCriticas(List<Critica> criticas) {
+		this.criticas = criticas;
+	}
+	
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
 	}
 
 	@Override

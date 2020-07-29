@@ -1,7 +1,9 @@
 package com.foodie.foodieApp.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -11,8 +13,10 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
-import com.foodie.foodieApp.entities.enums.RestauranteTipo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.foodie.foodieApp.entities.enums.TipoDeRefeicao;
 
 @Entity
 public class Restaurante implements Serializable{
@@ -27,6 +31,14 @@ public class Restaurante implements Serializable{
 	@ElementCollection
 	@CollectionTable(name = "Tipo_Restaurante")
 	private Set<Integer> tiposRestaurante = new HashSet<>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "restaurante")
+	private List<Comentario> comentarios = new ArrayList<>();
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "restaurante")
+	private List<Critica> criticas = new ArrayList<>();
 
 	public Restaurante() {
 	}
@@ -53,11 +65,11 @@ public class Restaurante implements Serializable{
 		this.nome = nome;
 	}
 	
-	public Set<RestauranteTipo> getTiposRestaurante() {
-		return tiposRestaurante.stream().map(x -> RestauranteTipo.toEnum(x)).collect(Collectors.toSet());
+	public Set<TipoDeRefeicao> getTiposRestaurante() {
+		return tiposRestaurante.stream().map(x -> TipoDeRefeicao.toEnum(x)).collect(Collectors.toSet());
 	}
 	
-	public void addRestauranteTipo(RestauranteTipo tipoRestaurante) {
+	public void addTipoDeRefeicao(TipoDeRefeicao tipoRestaurante) {
 		tiposRestaurante.add(tipoRestaurante.getCode());
 	}
 
@@ -67,6 +79,22 @@ public class Restaurante implements Serializable{
 
 	public void setPontuacaoMedia(Integer pontuacaoMedia) {
 		this.pontuacaoMedia = pontuacaoMedia;
+	}
+	
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
+
+	public List<Critica> getCriticas() {
+		return criticas;
+	}
+
+	public void setCriticas(List<Critica> criticas) {
+		this.criticas = criticas;
 	}
 
 	@Override

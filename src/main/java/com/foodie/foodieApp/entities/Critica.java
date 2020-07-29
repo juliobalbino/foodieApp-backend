@@ -2,14 +2,20 @@ package com.foodie.foodieApp.entities;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.foodie.foodieApp.entities.enums.RestauranteTipo;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.foodie.foodieApp.entities.enums.TipoDeRefeicao;
 
 @Entity
 public class Critica implements Serializable{
@@ -27,17 +33,31 @@ public class Critica implements Serializable{
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant data;
 	
+	@ManyToOne
+	@JoinColumn(name = "autor_id")
+	private Usuario autor;
+
+	@ManyToOne
+	@JoinColumn(name = "restaurante_id")
+	private Restaurante restaurante;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "critica")
+	private List<Comentario> comentarios = new ArrayList<>();
+	
 	public Critica () {
 	}
 
-	public Critica(Integer id, String nome, Integer pontuacao, RestauranteTipo tipoDeRefeicao, String corpo, Integer curtidas, Instant data) {
+	public Critica(Integer id, String nome, Integer pontuacao, TipoDeRefeicao tipoDeRefeicao, String corpo, Integer curtidas, Instant data, Usuario autor, Restaurante restaurante) {
 		this.id = id;
 		this.nome = nome;
 		this.pontuacao = pontuacao;
-		setRestauranteTipo(tipoDeRefeicao);
+		setTipoDeRefeicao(tipoDeRefeicao);
 		this.corpo = corpo;
 		this.curtidas = curtidas;
 		this.data = data;
+		this.autor = autor;
+		this.restaurante = restaurante;
 	}
 
 	public Integer getId() {
@@ -64,11 +84,11 @@ public class Critica implements Serializable{
 		this.pontuacao = pontuacao;
 	}
 
-	public RestauranteTipo getRestauranteTipo() {
-		return RestauranteTipo.valueOf(tipoDeRefeicao);
+	public TipoDeRefeicao getTipoDeRefeicao() {
+		return TipoDeRefeicao.valueOf(tipoDeRefeicao);
 	}
 
-	public void setRestauranteTipo(RestauranteTipo tipoDeRefeicao) {
+	public void setTipoDeRefeicao(TipoDeRefeicao tipoDeRefeicao) {
 		if (tipoDeRefeicao != null) {
 			this.tipoDeRefeicao = tipoDeRefeicao.getCode();
 		}
@@ -96,6 +116,30 @@ public class Critica implements Serializable{
 
 	public void setData(Instant data) {
 		this.data = data;
+	}
+	
+	public Usuario getAutor() {
+		return autor;
+	}
+
+	public void setAutor(Usuario autor) {
+		this.autor = autor;
+	}
+
+	public Restaurante getRestaurante() {
+		return restaurante;
+	}
+
+	public void setRestaurante(Restaurante restaurante) {
+		this.restaurante = restaurante;
+	}
+	
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
 	}
 
 	@Override
