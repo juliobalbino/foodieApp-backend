@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.foodie.foodieApp.entities.Restaurante;
 import com.foodie.foodieApp.repositories.RestauranteRepository;
+import com.foodie.foodieApp.services.exceptions.ObjectNotFoundException;
 
 @Service
 public class RestauranteService {
@@ -21,11 +22,19 @@ public class RestauranteService {
 	
 	public Restaurante findById(Integer id) {
 		Optional<Restaurante> obj = repository.findById(id);
-		return obj.get();
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Restaurante.class.getName()));
 	}
 	
 	public Restaurante insert(Restaurante obj) {
 		obj.setId(null);
 		return repository.save(obj);
 	}
+	
+	public Restaurante update(Restaurante obj) {
+		findById(obj.getId());
+		return repository.save(obj);
+	}
+	
+	
 }
