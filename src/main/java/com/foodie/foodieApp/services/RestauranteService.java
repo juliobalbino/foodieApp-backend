@@ -23,4 +23,9 @@ public class RestauranteService {
 		Optional<Restaurante> obj = repository.findById(id);
 		return obj.get();
 	}
+	
+	public Restaurante insert(Restaurante obj) {
+		obj.setId(null);
+		return repository.save(obj);
+	}
 }
