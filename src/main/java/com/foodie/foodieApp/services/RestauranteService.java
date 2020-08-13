@@ -4,10 +4,12 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.foodie.foodieApp.entities.Restaurante;
 import com.foodie.foodieApp.repositories.RestauranteRepository;
+import com.foodie.foodieApp.services.exceptions.DataIntegrityException;
 import com.foodie.foodieApp.services.exceptions.ObjectNotFoundException;
 
 @Service
@@ -36,5 +38,13 @@ public class RestauranteService {
 		return repository.save(obj);
 	}
 	
-	
+	public void delete (Integer id) {
+		findById(id);
+		try {
+			repository.deleteById(id);
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possivel excluir um restaurante que possui comentarios");
+		}
+	}
 }
