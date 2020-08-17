@@ -2,6 +2,7 @@ package com.foodie.foodieApp.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.foodie.foodieApp.dto.ComentarioDTO;
 import com.foodie.foodieApp.entities.Comentario;
 import com.foodie.foodieApp.services.ComentarioService;
 
@@ -24,9 +26,11 @@ public class ComentarioResource {
 	private ComentarioService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Comentario>> findAll() {
+	public ResponseEntity<List<ComentarioDTO>> findAll() {
 		List<Comentario> list = service.findAll();
-		return ResponseEntity.ok().body(list);
+		List<ComentarioDTO> listDto = list.stream().map(obj -> new ComentarioDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
+		
 	}
 	
 	@GetMapping(value = "/{id}")

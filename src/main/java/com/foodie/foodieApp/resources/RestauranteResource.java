@@ -2,6 +2,7 @@ package com.foodie.foodieApp.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.foodie.foodieApp.dto.RestauranteDTO;
 import com.foodie.foodieApp.entities.Restaurante;
 import com.foodie.foodieApp.services.RestauranteService;
 
@@ -24,9 +26,10 @@ public class RestauranteResource {
 	private RestauranteService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Restaurante>> findAll() {
+	public ResponseEntity<List<RestauranteDTO>> findAll() {
 		List<Restaurante> list = service.findAll();
-		return ResponseEntity.ok().body(list);
+		List<RestauranteDTO> listDto = list.stream().map(obj -> new RestauranteDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 	}
 	
 	@GetMapping(value = "/{id}")

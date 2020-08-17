@@ -2,6 +2,7 @@ package com.foodie.foodieApp.resources;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.foodie.foodieApp.dto.CriticaDTO;
 import com.foodie.foodieApp.entities.Critica;
 import com.foodie.foodieApp.services.CriticaService;
 
@@ -24,9 +26,10 @@ public class CriticaResource {
 	private CriticaService service;
 	
 	@GetMapping
-	public ResponseEntity<List<Critica>> findAll() {
+	public ResponseEntity<List<CriticaDTO>> findAll() {
 		List<Critica> list = service.findAll();
-		return ResponseEntity.ok().body(list);
+		List<CriticaDTO> listDto = list.stream().map(obj -> new CriticaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(listDto);
 	}
 	
 	@GetMapping(value = "/{id}")

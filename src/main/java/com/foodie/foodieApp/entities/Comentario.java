@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Comentario implements Serializable{
@@ -28,6 +29,7 @@ public class Comentario implements Serializable{
 	@JoinColumn(name = "restaurante_id")
 	private Restaurante restaurante;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "critica_id")
 	private Critica critica;
