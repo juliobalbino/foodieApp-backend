@@ -42,8 +42,9 @@ public class CriticaService {
 	}
 	
 	public Critica update(Critica obj) {
-		findById(obj.getId());
-		return repository.save(obj);
+		Critica newObj = findById(obj.getId());
+		updateData(newObj, obj);
+		return repository.save(newObj);
 	}
 	
 	public void delete (Integer id) {
@@ -54,5 +55,16 @@ public class CriticaService {
 		catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possivel excluir um restaurante que possui comentarios");
 		}
+	}
+	
+	private void updateData(Critica newObj, Critica obj) {
+		newObj.setNome(obj.getNome());
+		newObj.setPontuacao(obj.getPontuacao());
+		newObj.setTipoDeRefeicao(obj.getTipoDeRefeicao());
+		newObj.setCorpo(obj.getCorpo());
+		newObj.setCurtidas(obj.getCurtidas());
+		newObj.setData(obj.getData());
+		newObj.setAutor(obj.getAutor());
+		newObj.setRestaurante(obj.getRestaurante());
 	}
 }

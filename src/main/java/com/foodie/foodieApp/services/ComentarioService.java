@@ -42,8 +42,9 @@ public class ComentarioService {
 	}
 	
 	public Comentario update(Comentario obj) {
-		findById(obj.getId());
-		return repository.save(obj);
+		Comentario newObj = findById(obj.getId());
+		updateData(newObj, obj);
+		return repository.save(newObj);
 	}
 	
 	public void delete (Integer id) {
@@ -54,5 +55,13 @@ public class ComentarioService {
 		catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possivel excluir um restaurante que possui comentarios");
 		}
+	}
+	
+	private void updateData(Comentario newObj, Comentario obj) {
+		newObj.setTexto(obj.getTexto());
+		newObj.setData(obj.getData());
+		newObj.setRestaurante(obj.getRestaurante());
+		newObj.setCritica(obj.getCritica());
+		newObj.setAutor(obj.getAutor());
 	}
 }

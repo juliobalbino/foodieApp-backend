@@ -42,8 +42,9 @@ public class RestauranteService {
 	}
 	
 	public Restaurante update(Restaurante obj) {
-		findById(obj.getId());
-		return repository.save(obj);
+		Restaurante newObj = findById(obj.getId());
+		updateData(newObj, obj);
+		return repository.save(newObj);
 	}
 	
 	public void delete (Integer id) {
@@ -54,5 +55,10 @@ public class RestauranteService {
 		catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possivel excluir um restaurante que possui comentarios");
 		}
+	}
+	
+	private void updateData(Restaurante newObj, Restaurante obj) {
+		newObj.setNome(obj.getNome());
+		newObj.setPontuacaoMedia(obj.getPontuacaoMedia());
 	}
 }
