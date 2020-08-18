@@ -43,6 +43,8 @@ public class TestConfig implements CommandLineRunner{
 		Restaurante r1 = new Restaurante(null, "Paris6", 20);
 		r1.addTipoDeRefeicao(TipoDeRefeicao.ALMOCO);
 		Restaurante r2 = new Restaurante(null, "Outback", 18);
+		r2.addTipoDeRefeicao(TipoDeRefeicao.ALMOCO);
+		r2.addTipoDeRefeicao(TipoDeRefeicao.JANTAR);
 		
 		Critica cr1 = new Critica(null, "Paris6", 10, TipoDeRefeicao.JANTAR, "Fui no Paris6 e Amei, muito boa a comida", 9, Instant.parse("2019-06-20T18:10:32Z"), u1, r1);
 		
