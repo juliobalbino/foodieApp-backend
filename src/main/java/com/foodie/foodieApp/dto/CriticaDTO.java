@@ -2,14 +2,18 @@ package com.foodie.foodieApp.dto;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.foodie.foodieApp.entities.Comentario;
 import com.foodie.foodieApp.entities.Critica;
+import com.foodie.foodieApp.entities.Usuario;
 import com.foodie.foodieApp.entities.enums.TipoDeRefeicao;
 
 public class CriticaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
-
+	
 	private Integer id;
 	private String nome;
 	private Integer pontuacao;
@@ -20,17 +24,23 @@ public class CriticaDTO implements Serializable {
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant data;
 	
-	public CriticaDTO() {
+	private Usuario autor;
+	
+	private List<Comentario> comentarios = new ArrayList<>();
+	
+	public CriticaDTO () {
 	}
 	
 	public CriticaDTO(Critica obj) {
 		id = obj.getId();
 		nome = obj.getNome();
 		pontuacao = obj.getPontuacao();
-		setTipoDeRefeicao(obj.getTipoDeRefeicao());
+		tipoDeRefeicao = obj.getTipoDeRefeicao();
 		corpo = obj.getCorpo();
 		curtidas = obj.getCurtidas();
 		data = obj.getData();
+		autor = obj.getAutor();
+		comentarios = obj.getComentarios();
 	}
 
 	public Integer getId() {
@@ -89,4 +99,19 @@ public class CriticaDTO implements Serializable {
 		this.data = data;
 	}
 
+	public Usuario getAutor() {
+		return autor;
+	}
+
+	public void setAutor(Usuario autor) {
+		this.autor = autor;
+	}
+
+	public List<Comentario> getComentarios() {
+		return comentarios;
+	}
+
+	public void setComentarios(List<Comentario> comentarios) {
+		this.comentarios = comentarios;
+	}
 }

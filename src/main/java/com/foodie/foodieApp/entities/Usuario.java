@@ -20,7 +20,11 @@ public class Usuario implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
+	
+	@JsonIgnore
 	private String email;
+	
+	@JsonIgnore
 	private String senha;
 	
 	@JsonIgnore
