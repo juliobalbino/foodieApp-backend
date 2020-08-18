@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -40,7 +41,7 @@ public class Critica implements Serializable{
 	@JoinColumn(name = "restaurante_id")
 	private Restaurante restaurante;
 	
-	@OneToMany(mappedBy = "critica")
+	@OneToMany(mappedBy = "critica", cascade = CascadeType.ALL)
 	private List<Comentario> comentarios = new ArrayList<>();
 	
 	public Critica () {
