@@ -18,6 +18,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.foodie.foodieApp.dto.RestauranteDTO;
 import com.foodie.foodieApp.entities.Restaurante;
+import com.foodie.foodieApp.resources.utils.URL;
 import com.foodie.foodieApp.services.RestauranteService;
 
 @RestController
@@ -70,5 +71,18 @@ public class RestauranteResource {
 	public ResponseEntity<Void> delete(@PathVariable Integer id) {
 		service.delete(id);
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping(value = "/searchnome")
+	public ResponseEntity<Page<RestauranteDTO>> searchNome(
+			@RequestParam(value = "nome", defaultValue = "") String nome,
+			@RequestParam(value = "page", defaultValue = "0") Integer page, 
+			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
+			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 
+			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+		nome = URL.decodeParam(nome);
+		Page<Restaurante> list = service.searchNome(nome, page, linesPerPage, orderBy, direction);
+		Page<RestauranteDTO> listDto = list.map(obj -> new RestauranteDTO(obj));
+		return ResponseEntity.ok().body(listDto);
 	}
 }

@@ -57,6 +57,11 @@ public class RestauranteService {
 		}
 	}
 	
+	public Page<Restaurante> searchNome(String nome, Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repository.findDistinctByNomeContaining(nome, pageRequest);
+	}
+	
 	private void updateData(Restaurante newObj, Restaurante obj) {
 		newObj.setNome(obj.getNome());
 		newObj.setPontuacaoMedia(obj.getPontuacaoMedia());

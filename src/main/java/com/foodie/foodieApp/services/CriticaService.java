@@ -57,6 +57,11 @@ public class CriticaService {
 		}
 	}
 	
+	public Page<Critica> searchNome(String nome, Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repository.findDistinctByNomeContaining(nome, pageRequest);
+	}
+	
 	private void updateData(Critica newObj, Critica obj) {
 		newObj.setNome(obj.getNome());
 		newObj.setPontuacao(obj.getPontuacao());

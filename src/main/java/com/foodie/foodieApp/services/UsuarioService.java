@@ -57,6 +57,11 @@ public class UsuarioService {
 		}
 	}
 	
+	public Page<Usuario> searchNome(String nome, Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repository.findDistinctByNomeContaining(nome, pageRequest);
+	}
+	
 	private void updateData(Usuario newObj, Usuario obj) {
 		newObj.setNome(obj.getNome());
 		newObj.setEmail(obj.getEmail());
