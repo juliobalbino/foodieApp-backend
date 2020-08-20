@@ -42,7 +42,7 @@ public class UsuarioService {
 	
 	public Usuario insert(Usuario obj) {
 		obj.setId(null);
-		emailService.sendAccConfirmationEmail(obj);
+		emailService.sendAccConfirmationHtmlEmail(obj);
 		return repository.save(obj);
 	}
 	
