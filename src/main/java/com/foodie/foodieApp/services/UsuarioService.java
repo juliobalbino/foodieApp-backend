@@ -21,6 +21,9 @@ public class UsuarioService {
 	@Autowired
 	private UsuarioRepository repository;
 	
+	@Autowired
+	private EmailService emailService;
+	
 	public List<Usuario> findAll() {
 		return repository.findAll();
 	}
@@ -38,6 +41,7 @@ public class UsuarioService {
 	
 	public Usuario insert(Usuario obj) {
 		obj.setId(null);
+		emailService.sendAccConfirmationEmail(obj);
 		return repository.save(obj);
 	}
 	
