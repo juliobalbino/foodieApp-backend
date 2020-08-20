@@ -35,6 +35,7 @@ public class DBService {
 
 	Usuario u1 = new Usuario(null, "Maria Green", "maria@gmail.com", "123");
 	Usuario u2 = new Usuario(null, "Alex Brown", "alex@gmail.com", "123");
+	Usuario u3 = new Usuario(null, "Will Blue", "Will@gmail.com", "123");
 	
 	Restaurante r1 = new Restaurante(null, "Paris6", 20);
 	r1.addTipoDeRefeicao(TipoDeRefeicao.ALMOCO);
@@ -55,7 +56,7 @@ public class DBService {
 	
 	u1.getCriticas().addAll(Arrays.asList(cr1));
 	
-	usuarioRepository.saveAll(Arrays.asList(u1, u2));
+	usuarioRepository.saveAll(Arrays.asList(u1, u2, u3));
 	
 	restauranteRepository.saveAll(Arrays.asList(r1, r2));
 	
