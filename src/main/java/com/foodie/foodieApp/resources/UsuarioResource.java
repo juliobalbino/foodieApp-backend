@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.foodie.foodieApp.dto.UsuarioDTO;
+import com.foodie.foodieApp.dto.UsuarioNewDTO;
 import com.foodie.foodieApp.entities.Usuario;
 import com.foodie.foodieApp.resources.utils.URL;
 import com.foodie.foodieApp.services.UsuarioService;
@@ -53,7 +54,8 @@ public class UsuarioResource {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)
-	public ResponseEntity<Void> insert(@RequestBody Usuario obj) {
+	public ResponseEntity<Void> insert(@RequestBody UsuarioNewDTO objDto) {
+		Usuario obj = service.fromDTO(objDto);
 		obj = service.insert(obj);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
 				.path("/{id}").buildAndExpand(obj.getId()).toUri();

@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.foodie.foodieApp.dto.UsuarioNewDTO;
 import com.foodie.foodieApp.entities.Usuario;
 import com.foodie.foodieApp.repositories.UsuarioRepository;
 import com.foodie.foodieApp.services.exceptions.DataIntegrityException;
@@ -64,6 +65,11 @@ public class UsuarioService {
 	public Page<Usuario> searchNome(String nome, Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repository.findDistinctByNomeContaining(nome, pageRequest);
+	}
+	
+	public Usuario fromDTO(UsuarioNewDTO objDto) {
+		Usuario us = new Usuario(null, objDto.getNome(), objDto.getEmail(), objDto.getSenha());
+		return us;
 	}
 	
 	private void updateData(Usuario newObj, Usuario obj) {
