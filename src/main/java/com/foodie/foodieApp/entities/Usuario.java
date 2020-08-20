@@ -119,10 +119,10 @@ public class Usuario implements Serializable{
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append(" Usuario criado com sucesso !");
-		builder.append("\n Nome de Usuário: ");
+		builder.append("\nUsuario criado com sucesso !");
+		builder.append("\nNome de Usuário: ");
 		builder.append(getNome());
-		builder.append("\n Email cadastrado: ");
+		builder.append("\nEmail cadastrado: ");
 		builder.append(getEmail());
 		builder.append("\n");
 		return builder.toString();
