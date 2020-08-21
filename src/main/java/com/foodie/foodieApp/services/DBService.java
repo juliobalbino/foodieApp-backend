@@ -4,6 +4,7 @@ import java.time.Instant;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.foodie.foodieApp.entities.Comentario;
@@ -20,6 +21,9 @@ import com.foodie.foodieApp.repositories.UsuarioRepository;
 public class DBService {
 	
 	@Autowired
+	private BCryptPasswordEncoder pe;
+	
+	@Autowired
 	private UsuarioRepository usuarioRepository;
 	
 	@Autowired
@@ -33,9 +37,9 @@ public class DBService {
 	
 	public void instantiateTestDatabase() {
 
-	Usuario u1 = new Usuario(null, "Maria Green", "maria@gmail.com", "123");
-	Usuario u2 = new Usuario(null, "Alex Brown", "alex@gmail.com", "123");
-	Usuario u3 = new Usuario(null, "Will Blue", "Will@gmail.com", "123");
+	Usuario u1 = new Usuario(null, "Maria Green", "maria@gmail.com", pe.encode("123"));
+	Usuario u2 = new Usuario(null, "Alex Brown", "alex@gmail.com", pe.encode("123"));
+	Usuario u3 = new Usuario(null, "Will Blue", "Will@gmail.com", pe.encode("123"));
 	
 	Restaurante r1 = new Restaurante(null, "Paris6", 20);
 	r1.addTipoDeRefeicao(TipoDeRefeicao.ALMOCO);
