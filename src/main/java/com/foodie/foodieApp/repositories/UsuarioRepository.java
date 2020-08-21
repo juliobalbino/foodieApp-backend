@@ -11,4 +11,6 @@ import com.foodie.foodieApp.entities.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 
 	Page<Usuario> findDistinctByNomeContaining(String nome, Pageable pageRequest);
+	
+	Usuario findByEmail(String email);
 }
