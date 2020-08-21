@@ -11,6 +11,7 @@ import com.foodie.foodieApp.entities.Comentario;
 import com.foodie.foodieApp.entities.Critica;
 import com.foodie.foodieApp.entities.Restaurante;
 import com.foodie.foodieApp.entities.Usuario;
+import com.foodie.foodieApp.entities.enums.Perfil;
 import com.foodie.foodieApp.entities.enums.TipoDeRefeicao;
 import com.foodie.foodieApp.repositories.ComentarioRepository;
 import com.foodie.foodieApp.repositories.CriticaRepository;
@@ -39,7 +40,8 @@ public class DBService {
 
 	Usuario u1 = new Usuario(null, "Maria Green", "maria@gmail.com", pe.encode("123"));
 	Usuario u2 = new Usuario(null, "Alex Brown", "alex@gmail.com", pe.encode("123"));
-	Usuario u3 = new Usuario(null, "Will Blue", "Will@gmail.com", pe.encode("123"));
+	Usuario u3 = new Usuario(null, "Julio Balbino", "julio4110@hotmail.com", pe.encode("123"));
+	u3.addPerfil(Perfil.ADMIN);
 	
 	Restaurante r1 = new Restaurante(null, "Paris6", 20);
 	r1.addTipoDeRefeicao(TipoDeRefeicao.ALMOCO);
