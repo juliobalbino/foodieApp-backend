@@ -49,7 +49,8 @@ public class DBService {
 	r2.addTipoDeRefeicao(TipoDeRefeicao.ALMOCO);
 	r2.addTipoDeRefeicao(TipoDeRefeicao.JANTAR);
 	
-	Critica cr1 = new Critica(null, "Paris6", 10, TipoDeRefeicao.JANTAR, "Fui no Paris6 e Amei, muito boa a comida", 9, Instant.parse("2019-06-20T18:10:32Z"), u1, r1);
+	Critica cr1 = new Critica(null, "Paris6", 10, TipoDeRefeicao.JANTAR, "Fui no Paris6 e Amei, muito boa a comida", 9, Instant.now(), u1, r1);
+	Critica cr2 = new Critica(null, "Outback Horrivel", 2, TipoDeRefeicao.ALMOCO, "Fui ao Outback no ABC e Odiei, comida tudo doce", 9, Instant.parse("2019-06-20T19:32:06Z"), u2, r2);
 	
 	Comentario c1 = new Comentario(null, "Bom lugar, eu já fui lá", Instant.parse("2019-06-20T19:10:32Z"), r1, cr1, u1);
 	Comentario c2 = new Comentario(null, "Gostei da publicação, fiquei com vontade de ir", Instant.parse("2019-06-20T19:32:06Z"), r2, cr1, u2);
@@ -58,15 +59,17 @@ public class DBService {
 	
 	r1.getComentarios().addAll(Arrays.asList(c1));
 	r1.getCriticas().addAll(Arrays.asList(cr1));
+	r2.getCriticas().addAll(Arrays.asList(cr2));
 	r2.getComentarios().addAll(Arrays.asList(c2));
 	
 	u1.getCriticas().addAll(Arrays.asList(cr1));
+	u2.getCriticas().addAll(Arrays.asList(cr2));
 	
 	usuarioRepository.saveAll(Arrays.asList(u1, u2, u3));
 	
 	restauranteRepository.saveAll(Arrays.asList(r1, r2));
 	
-	criticaRespository.saveAll(Arrays.asList(cr1));
+	criticaRespository.saveAll(Arrays.asList(cr1, cr2));
 	
 	comentarioRespository.saveAll(Arrays.asList(c1, c2));
 	

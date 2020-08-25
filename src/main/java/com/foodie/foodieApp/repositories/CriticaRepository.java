@@ -6,9 +6,12 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.foodie.foodieApp.entities.Critica;
+import com.foodie.foodieApp.entities.Usuario;
 
 @Repository
 public interface CriticaRepository extends JpaRepository<Critica, Integer>{
 
 	Page<Critica> findDistinctByNomeContaining(String nome, Pageable pageRequest);
+	
+	Page<Critica> findByAutor(Usuario autor, Pageable pageRequest);
 }

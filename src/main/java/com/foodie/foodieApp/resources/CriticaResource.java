@@ -39,9 +39,20 @@ public class CriticaResource {
 	public ResponseEntity<Page<CriticaDTO>> findPage(
 			@RequestParam(value = "page", defaultValue = "0") Integer page, 
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
-			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 
-			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+			@RequestParam(value = "orderBy", defaultValue = "data") String orderBy, 
+			@RequestParam(value = "direction", defaultValue = "DESC") String direction) {
 		Page<Critica> list = service.findPage(page, linesPerPage, orderBy, direction);
+		Page<CriticaDTO> listDto = list.map(obj -> new CriticaDTO(obj));
+		return ResponseEntity.ok().body(listDto);
+	}
+	
+	@GetMapping(value = "/minhascriticas")
+	public ResponseEntity<Page<CriticaDTO>> findMinhasCriticas(
+			@RequestParam(value = "page", defaultValue = "0") Integer page, 
+			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
+			@RequestParam(value = "orderBy", defaultValue = "data") String orderBy, 
+			@RequestParam(value = "direction", defaultValue = "DESC") String direction) {
+		Page<Critica> list = service.findMinhasCriticas(page, linesPerPage, orderBy, direction);
 		Page<CriticaDTO> listDto = list.map(obj -> new CriticaDTO(obj));
 		return ResponseEntity.ok().body(listDto);
 	}

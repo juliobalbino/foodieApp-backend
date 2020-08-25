@@ -1,5 +1,6 @@
 package com.foodie.foodieApp.services;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,7 +12,10 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.foodie.foodieApp.entities.Critica;
+import com.foodie.foodieApp.entities.Usuario;
 import com.foodie.foodieApp.repositories.CriticaRepository;
+import com.foodie.foodieApp.security.UserSS;
+import com.foodie.foodieApp.services.exceptions.AuthorizationException;
 import com.foodie.foodieApp.services.exceptions.DataIntegrityException;
 import com.foodie.foodieApp.services.exceptions.ObjectNotFoundException;
 
@@ -20,6 +24,9 @@ public class CriticaService {
 
 	@Autowired
 	private CriticaRepository repository;
+	
+	@Autowired
+	private UsuarioService usuarioService;
 	
 	public List<Critica> findAll() {
 		return repository.findAll();
@@ -36,8 +43,20 @@ public class CriticaService {
 		return repository.findAll(pageRequest);
 	}
 	
+	public Page<Critica> findMinhasCriticas(Integer page, Integer linesPerPage, String orderBy, String direction) {
+		UserSS user = UserService.authenticated();
+		if (user == null) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		Usuario autor = usuarioService.findById(user.getId());
+		return repository.findByAutor(autor, pageRequest);
+	}
+	
 	public Critica insert(Critica obj) {
 		obj.setId(null);
+		obj.setData(Instant.now());
+		obj.setAutor(usuarioService.findById(obj.getAutor().getId()));
 		return repository.save(obj);
 	}
 	
