@@ -51,7 +51,7 @@ public class Critica implements Serializable{
 		this.id = id;
 		this.nome = nome;
 		this.pontuacao = pontuacao;
-		setTipoDeRefeicao(tipoDeRefeicao);
+		this.tipoDeRefeicao = (tipoDeRefeicao == null) ? null : tipoDeRefeicao.getCode();
 		this.corpo = corpo;
 		this.curtidas = curtidas;
 		this.data = data;

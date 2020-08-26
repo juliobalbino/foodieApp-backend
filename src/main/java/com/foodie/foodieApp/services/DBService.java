@@ -53,7 +53,7 @@ public class DBService {
 	Critica cr2 = new Critica(null, "Outback Horrivel", 2, TipoDeRefeicao.ALMOCO, "Fui ao Outback no ABC e Odiei, comida tudo doce", 9, Instant.parse("2019-06-20T19:32:06Z"), u2, r2);
 	
 	Comentario c1 = new Comentario(null, "Bom lugar, eu já fui lá", Instant.parse("2019-06-20T19:10:32Z"), r1, cr1, u1);
-	Comentario c2 = new Comentario(null, "Gostei da publicação, fiquei com vontade de ir", Instant.parse("2019-06-20T19:32:06Z"), r2, cr1, u2);
+	Comentario c2 = new Comentario(null, "Gostei da publicação, fiquei com vontade de ir", Instant.parse("2019-06-20T19:32:06Z"), r1, cr1, u2);
 	
 	cr1.getComentarios().addAll(Arrays.asList(c1, c2));
 	

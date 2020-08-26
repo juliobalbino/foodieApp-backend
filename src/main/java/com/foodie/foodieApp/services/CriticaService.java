@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.foodie.foodieApp.entities.Critica;
 import com.foodie.foodieApp.entities.Usuario;
+import com.foodie.foodieApp.entities.enums.Perfil;
 import com.foodie.foodieApp.repositories.CriticaRepository;
 import com.foodie.foodieApp.security.UserSS;
 import com.foodie.foodieApp.services.exceptions.AuthorizationException;
@@ -27,6 +28,9 @@ public class CriticaService {
 	
 	@Autowired
 	private UsuarioService usuarioService;
+	
+	@Autowired
+	private RestauranteService restauranteService;
 	
 	public List<Critica> findAll() {
 		return repository.findAll();
@@ -56,17 +60,35 @@ public class CriticaService {
 	public Critica insert(Critica obj) {
 		obj.setId(null);
 		obj.setData(Instant.now());
+		obj.setRestaurante(restauranteService.findById(obj.getRestaurante().getId()));
 		obj.setAutor(usuarioService.findById(obj.getAutor().getId()));
 		return repository.save(obj);
 	}
 	
 	public Critica update(Critica obj) {
 		Critica newObj = findById(obj.getId());
+		
+		UserSS user = UserService.authenticated();
+		Integer id = newObj.getAutor().getId();
+		
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Não Autorizado");
+		}
+		
 		updateData(newObj, obj);
 		return repository.save(newObj);
 	}
 	
 	public void delete (Integer id) {
+		Critica obj = findById(id);
+		
+		UserSS user = UserService.authenticated();
+		Integer idautor = obj.getAutor().getId();
+		
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !idautor.equals(user.getId())) {
+			throw new AuthorizationException("Não Autorizado");
+		}
+		
 		findById(id);
 		try {
 			repository.deleteById(id);
@@ -83,12 +105,7 @@ public class CriticaService {
 	
 	private void updateData(Critica newObj, Critica obj) {
 		newObj.setNome(obj.getNome());
-		newObj.setPontuacao(obj.getPontuacao());
-		newObj.setTipoDeRefeicao(obj.getTipoDeRefeicao());
 		newObj.setCorpo(obj.getCorpo());
 		newObj.setCurtidas(obj.getCurtidas());
-		newObj.setData(obj.getData());
-		newObj.setAutor(obj.getAutor());
-		newObj.setRestaurante(obj.getRestaurante());
 	}
 }
