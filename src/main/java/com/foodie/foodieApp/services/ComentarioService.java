@@ -11,7 +11,10 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.foodie.foodieApp.entities.Comentario;
+import com.foodie.foodieApp.entities.enums.Perfil;
 import com.foodie.foodieApp.repositories.ComentarioRepository;
+import com.foodie.foodieApp.security.UserSS;
+import com.foodie.foodieApp.services.exceptions.AuthorizationException;
 import com.foodie.foodieApp.services.exceptions.DataIntegrityException;
 import com.foodie.foodieApp.services.exceptions.ObjectNotFoundException;
 
@@ -43,11 +46,28 @@ public class ComentarioService {
 	
 	public Comentario update(Comentario obj) {
 		Comentario newObj = findById(obj.getId());
+		
+		UserSS user = UserService.authenticated();
+		Integer id = newObj.getAutor().getId();
+		
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Não Autorizado");
+		}
+		
 		updateData(newObj, obj);
 		return repository.save(newObj);
 	}
 	
 	public void delete (Integer id) {
+		Comentario obj = findById(id);
+		
+		UserSS user = UserService.authenticated();
+		Integer idautor = obj.getAutor().getId();
+		
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !idautor.equals(user.getId())) {
+			throw new AuthorizationException("Não Autorizado");
+		}
+		
 		findById(id);
 		try {
 			repository.deleteById(id);
@@ -59,9 +79,5 @@ public class ComentarioService {
 	
 	private void updateData(Comentario newObj, Comentario obj) {
 		newObj.setTexto(obj.getTexto());
-		newObj.setData(obj.getData());
-		newObj.setRestaurante(obj.getRestaurante());
-		newObj.setCritica(obj.getCritica());
-		newObj.setAutor(obj.getAutor());
 	}
 }
