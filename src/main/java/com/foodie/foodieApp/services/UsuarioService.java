@@ -13,7 +13,10 @@ import org.springframework.stereotype.Service;
 
 import com.foodie.foodieApp.dto.UsuarioNewDTO;
 import com.foodie.foodieApp.entities.Usuario;
+import com.foodie.foodieApp.entities.enums.Perfil;
 import com.foodie.foodieApp.repositories.UsuarioRepository;
+import com.foodie.foodieApp.security.UserSS;
+import com.foodie.foodieApp.services.exceptions.AuthorizationException;
 import com.foodie.foodieApp.services.exceptions.DataIntegrityException;
 import com.foodie.foodieApp.services.exceptions.ObjectNotFoundException;
 
@@ -51,12 +54,26 @@ public class UsuarioService {
 	}
 	
 	public Usuario update(Usuario obj) {
+		
+		UserSS user = UserService.authenticated();
+		
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !obj.getId().equals(user.getId())) {
+			throw new AuthorizationException("Não Autorizado");
+		}
+		
 		Usuario newObj = findById(obj.getId());
 		updateData(newObj, obj);
 		return repository.save(newObj);
 	}
 
 	public void delete (Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Não Autorizado");
+		}
+		
 		findById(id);
 		try {
 			repository.deleteById(id);
@@ -77,6 +94,7 @@ public class UsuarioService {
 	}
 	
 	private void updateData(Usuario newObj, Usuario obj) {
+		newObj.setSenha(obj.getSenha());
 		newObj.setNome(obj.getNome());
 		newObj.setEmail(obj.getEmail());
 	}

@@ -50,7 +50,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final String[] PUBLIC_MATCHERS_POST = {
 			"/usuarios/**",
 			"/criticas/**",
-			"/comentarios/**"
+			"/comentarios/**",
+			"/auth/forgot/**"
 	};
 	
 	private static final String[] PUBLIC_MATCHERS_DELETE = {
