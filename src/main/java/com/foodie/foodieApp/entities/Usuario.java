@@ -49,6 +49,8 @@ public class Usuario implements Serializable{
 	@OneToMany(mappedBy = "autor")
 	private List<Comentario> comentarios = new ArrayList<>();
 	
+	private String imgUrl;
+	
 	public Usuario() {
 		addPerfil(Perfil.USUARIO);
 	}
@@ -115,6 +117,14 @@ public class Usuario implements Serializable{
 
 	public void setComentarios(List<Comentario> comentarios) {
 		this.comentarios = comentarios;
+	}
+	
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	@Override
