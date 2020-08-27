@@ -1,5 +1,6 @@
 package com.foodie.foodieApp.services;
 
+import java.net.URI;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.foodie.foodieApp.entities.Critica;
 import com.foodie.foodieApp.entities.Usuario;
@@ -31,6 +33,9 @@ public class CriticaService {
 	
 	@Autowired
 	private RestauranteService restauranteService;
+	
+	@Autowired
+	private S3Service s3Service;
 	
 	public List<Critica> findAll() {
 		return repository.findAll();
@@ -107,5 +112,9 @@ public class CriticaService {
 		newObj.setNome(obj.getNome());
 		newObj.setCorpo(obj.getCorpo());
 		newObj.setCurtidas(obj.getCurtidas());
+	}
+	
+	public URI uploadProfilePicture(MultipartFile multipartFile) {
+		return s3Service.uploadFile(multipartFile);
 	}
 }

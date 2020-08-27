@@ -1,5 +1,6 @@
 package com.foodie.foodieApp.services;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,6 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.foodie.foodieApp.entities.Restaurante;
 import com.foodie.foodieApp.repositories.RestauranteRepository;
@@ -20,6 +22,9 @@ public class RestauranteService {
 
 	@Autowired
 	private RestauranteRepository repository;
+	
+	@Autowired
+	private S3Service s3Service;
 	
 	public List<Restaurante> findAll() {
 		return repository.findAll();
@@ -65,5 +70,9 @@ public class RestauranteService {
 	private void updateData(Restaurante newObj, Restaurante obj) {
 		newObj.setNome(obj.getNome());
 		newObj.setPontuacaoMedia(obj.getPontuacaoMedia());
+	}
+	
+	public URI uploadProfilePicture(MultipartFile multipartFile) {
+		return s3Service.uploadFile(multipartFile);
 	}
 }
