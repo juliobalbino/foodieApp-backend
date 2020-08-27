@@ -98,9 +98,9 @@ public class CriticaResource {
 		return ResponseEntity.ok().body(listDto);
 	}
 	
-	@RequestMapping(value = "/picture", method=RequestMethod.POST)
-	public ResponseEntity<Void> uploadProfilePicture(@RequestParam(name="file") MultipartFile file) {
-		URI uri = service.uploadProfilePicture(file);
+	@RequestMapping(value = "/{id}/picture", method=RequestMethod.POST)
+	public ResponseEntity<Void> uploadProfilePicture(@PathVariable Integer id, @RequestParam(name="file") MultipartFile file) {
+		URI uri = service.uploadCriticaPicture(id,file);
 		return ResponseEntity.created(uri).build();
 	}
 }

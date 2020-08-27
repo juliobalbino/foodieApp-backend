@@ -39,6 +39,8 @@ public class Restaurante implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy = "restaurante")
 	private List<Critica> criticas = new ArrayList<>();
+	
+	private String imgUrl;
 
 	public Restaurante() {
 	}
@@ -70,7 +72,7 @@ public class Restaurante implements Serializable{
 	}
 	
 	public void addTipoDeRefeicao(TipoDeRefeicao tipoRestaurante) {
-		tiposRestaurante.add(tipoRestaurante.getCode());
+		tiposRestaurante.add(tipoRestaurante.getCod());
 	}
 
 	public Integer getPontuacaoMedia() {
@@ -95,6 +97,14 @@ public class Restaurante implements Serializable{
 
 	public void setCriticas(List<Critica> criticas) {
 		this.criticas = criticas;
+	}
+	
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	@Override

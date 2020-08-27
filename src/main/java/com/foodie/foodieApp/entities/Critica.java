@@ -44,6 +44,8 @@ public class Critica implements Serializable{
 	@OneToMany(mappedBy = "critica", cascade = CascadeType.ALL)
 	private List<Comentario> comentarios = new ArrayList<>();
 	
+	private String imgUrl;
+	
 	public Critica () {
 	}
 
@@ -51,7 +53,7 @@ public class Critica implements Serializable{
 		this.id = id;
 		this.nome = nome;
 		this.pontuacao = pontuacao;
-		this.tipoDeRefeicao = (tipoDeRefeicao == null) ? null : tipoDeRefeicao.getCode();
+		this.tipoDeRefeicao = (tipoDeRefeicao == null) ? null : tipoDeRefeicao.getCod();
 		this.corpo = corpo;
 		this.curtidas = curtidas;
 		this.data = data;
@@ -84,13 +86,11 @@ public class Critica implements Serializable{
 	}
 
 	public TipoDeRefeicao getTipoDeRefeicao() {
-		return TipoDeRefeicao.valueOf(tipoDeRefeicao);
+		return TipoDeRefeicao.toEnum(tipoDeRefeicao);
 	}
 
 	public void setTipoDeRefeicao(TipoDeRefeicao tipoDeRefeicao) {
-		if (tipoDeRefeicao != null) {
-			this.tipoDeRefeicao = tipoDeRefeicao.getCode();
-		}
+		this.tipoDeRefeicao = tipoDeRefeicao.getCod();
 	}
 
 	public String getCorpo() {
@@ -139,6 +139,14 @@ public class Critica implements Serializable{
 
 	public void setComentarios(List<Comentario> comentarios) {
 		this.comentarios = comentarios;
+	}
+	
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 
 	@Override

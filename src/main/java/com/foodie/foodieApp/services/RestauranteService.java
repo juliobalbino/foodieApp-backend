@@ -12,6 +12,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.foodie.foodieApp.entities.Critica;
 import com.foodie.foodieApp.entities.Restaurante;
 import com.foodie.foodieApp.repositories.RestauranteRepository;
 import com.foodie.foodieApp.services.exceptions.DataIntegrityException;
@@ -72,7 +73,13 @@ public class RestauranteService {
 		newObj.setPontuacaoMedia(obj.getPontuacaoMedia());
 	}
 	
-	public URI uploadProfilePicture(MultipartFile multipartFile) {
-		return s3Service.uploadFile(multipartFile);
+	public URI uploadRestaurantePicture(Integer id, MultipartFile multipartFile) {
+		
+		URI uri = s3Service.uploadFile(multipartFile);
+		
+		Restaurante obj = findById(id);
+		obj.setImgUrl(uri.toString());
+		repository.save(obj);
+		return uri;
 	}
 }

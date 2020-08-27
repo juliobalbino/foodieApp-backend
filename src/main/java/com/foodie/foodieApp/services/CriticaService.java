@@ -114,7 +114,14 @@ public class CriticaService {
 		newObj.setCurtidas(obj.getCurtidas());
 	}
 	
-	public URI uploadProfilePicture(MultipartFile multipartFile) {
-		return s3Service.uploadFile(multipartFile);
+	public URI uploadCriticaPicture(Integer id, MultipartFile multipartFile) {
+		
+		URI uri = s3Service.uploadFile(multipartFile);
+		
+		Critica obj = findById(id);
+		obj.setImgUrl(uri.toString());
+		repository.save(obj);
+		return uri;
 	}
+	
 }
