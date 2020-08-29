@@ -15,7 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.foodie.foodieApp.entities.enums.TipoDeRefeicao;
 
 @Entity
@@ -32,11 +31,11 @@ public class Restaurante implements Serializable{
 	@CollectionTable(name = "Tipo_Restaurante")
 	private Set<Integer> tiposRestaurante = new HashSet<>();
 	
-	@JsonIgnore
+	
 	@OneToMany(mappedBy = "restaurante")
 	private List<Comentario> comentarios = new ArrayList<>();
 	
-	@JsonIgnore
+	
 	@OneToMany(mappedBy = "restaurante")
 	private List<Critica> criticas = new ArrayList<>();
 	

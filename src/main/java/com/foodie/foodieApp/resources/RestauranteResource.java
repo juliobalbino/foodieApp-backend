@@ -2,7 +2,6 @@ package com.foodie.foodieApp.resources;
 
 import java.net.URI;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -30,10 +29,10 @@ public class RestauranteResource {
 	private RestauranteService service;
 	
 	@GetMapping
-	public ResponseEntity<List<RestauranteDTO>> findAll() {
+	public ResponseEntity<List<Restaurante>> findAll() {
 		List<Restaurante> list = service.findAll();
-		List<RestauranteDTO> listDto = list.stream().map(obj -> new RestauranteDTO(obj)).collect(Collectors.toList());
-		return ResponseEntity.ok().body(listDto);
+		//List<RestauranteDTO> listDto = list.stream().map(obj -> new RestauranteDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.ok().body(list);
 	}
 	
 	@GetMapping(value = "/{id}")
@@ -43,14 +42,14 @@ public class RestauranteResource {
 	}
 	
 	@GetMapping(value = "/page")
-	public ResponseEntity<Page<RestauranteDTO>> findPage(
+	public ResponseEntity<Page<Restaurante>> findPage(
 			@RequestParam(value = "page", defaultValue = "0") Integer page, 
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
 			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 
 			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
 		Page<Restaurante> list = service.findPage(page, linesPerPage, orderBy, direction);
-		Page<RestauranteDTO> listDto = list.map(obj -> new RestauranteDTO(obj));
-		return ResponseEntity.ok().body(listDto);
+		//Page<RestauranteDTO> listDto = list.map(obj -> new RestauranteDTO(obj));
+		return ResponseEntity.ok().body(list);
 	}
 	
 	@RequestMapping(method=RequestMethod.POST)

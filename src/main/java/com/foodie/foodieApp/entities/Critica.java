@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.foodie.foodieApp.entities.enums.TipoDeRefeicao;
 
 @Entity
@@ -37,6 +38,7 @@ public class Critica implements Serializable{
 	@JoinColumn(name = "autor_id")
 	private Usuario autor;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "restaurante_id")
 	private Restaurante restaurante;
