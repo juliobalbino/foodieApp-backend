@@ -44,7 +44,6 @@ public class Critica implements Serializable{
 	@OneToMany(mappedBy = "critica", cascade = CascadeType.ALL)
 	private List<Comentario> comentarios = new ArrayList<>();
 	
-	private String imgUrl;
 	
 	public Critica () {
 	}
@@ -141,13 +140,6 @@ public class Critica implements Serializable{
 		this.comentarios = comentarios;
 	}
 	
-	public String getImgUrl() {
-		return imgUrl;
-	}
-
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
-	}
 
 	@Override
 	public int hashCode() {

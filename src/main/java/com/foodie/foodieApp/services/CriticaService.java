@@ -1,11 +1,13 @@
 package com.foodie.foodieApp.services;
 
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -36,6 +38,12 @@ public class CriticaService {
 	
 	@Autowired
 	private S3Service s3Service;
+	
+	@Autowired
+	private ImageService imageService;
+	
+	@Value("${img.prefix.critica}")
+	private String prefix;
 	
 	public List<Critica> findAll() {
 		return repository.findAll();
@@ -116,12 +124,18 @@ public class CriticaService {
 	
 	public URI uploadCriticaPicture(Integer id, MultipartFile multipartFile) {
 		
-		URI uri = s3Service.uploadFile(multipartFile);
-		
 		Critica obj = findById(id);
-		obj.setImgUrl(uri.toString());
-		repository.save(obj);
-		return uri;
-	}
-	
+		
+		UserSS user = UserService.authenticated();
+		Integer idautor = obj.getAutor().getId();
+		
+		if (user==null || !user.hasRole(Perfil.ADMIN) && !idautor.equals(user.getId())) {
+			throw new AuthorizationException("Não Autorizado");
+		}
+		
+		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		String fileName = prefix + obj.getId() + ".jpg";
+		
+		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
+	}	
 }

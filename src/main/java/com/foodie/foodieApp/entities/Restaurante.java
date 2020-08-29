@@ -40,7 +40,6 @@ public class Restaurante implements Serializable{
 	@OneToMany(mappedBy = "restaurante")
 	private List<Critica> criticas = new ArrayList<>();
 	
-	private String imgUrl;
 
 	public Restaurante() {
 	}
@@ -99,13 +98,6 @@ public class Restaurante implements Serializable{
 		this.criticas = criticas;
 	}
 	
-	public String getImgUrl() {
-		return imgUrl;
-	}
-
-	public void setImgUrl(String imgUrl) {
-		this.imgUrl = imgUrl;
-	}
 
 	@Override
 	public int hashCode() {

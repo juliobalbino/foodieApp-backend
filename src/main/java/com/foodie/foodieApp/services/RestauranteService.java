@@ -1,10 +1,12 @@
 package com.foodie.foodieApp.services;
 
+import java.awt.image.BufferedImage;
 import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,7 +14,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.foodie.foodieApp.entities.Critica;
 import com.foodie.foodieApp.entities.Restaurante;
 import com.foodie.foodieApp.repositories.RestauranteRepository;
 import com.foodie.foodieApp.services.exceptions.DataIntegrityException;
@@ -26,6 +27,12 @@ public class RestauranteService {
 	
 	@Autowired
 	private S3Service s3Service;
+	
+	@Autowired
+	private ImageService imageService;
+	
+	@Value("${img.prefix.restaurante}")
+	private String prefix;
 	
 	public List<Restaurante> findAll() {
 		return repository.findAll();
@@ -74,12 +81,12 @@ public class RestauranteService {
 	}
 	
 	public URI uploadRestaurantePicture(Integer id, MultipartFile multipartFile) {
-		
-		URI uri = s3Service.uploadFile(multipartFile);
-		
+
 		Restaurante obj = findById(id);
-		obj.setImgUrl(uri.toString());
-		repository.save(obj);
-		return uri;
+		
+		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		String fileName = prefix + obj.getId() + ".jpg";
+		
+		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
 	}
 }
