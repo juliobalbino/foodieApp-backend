@@ -107,9 +107,14 @@ public class CriticaService {
 		}
 	}
 	
-	public Page<Critica> searchNome(String titulo, Integer page, Integer linesPerPage, String orderBy, String direction) {
+	public Page<Critica> searchTitulo(String titulo, Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
 		return repository.findDistinctByTituloContaining(titulo, pageRequest);
+	}
+	
+	public Page<Critica> searchRestaurante(String restaurante, Integer page, Integer linesPerPage, String orderBy, String direction) {
+		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
+		return repository.findDistinctByRestauranteContaining(restaurante, pageRequest);
 	}
 	
 	private void updateData(Critica newObj, Critica obj) {

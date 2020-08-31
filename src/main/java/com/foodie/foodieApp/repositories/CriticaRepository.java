@@ -14,4 +14,6 @@ public interface CriticaRepository extends JpaRepository<Critica, Integer>{
 	Page<Critica> findDistinctByTituloContaining(String titulo, Pageable pageRequest);
 	
 	Page<Critica> findByAutor(Usuario autor, Pageable pageRequest);
+	
+	Page<Critica> findDistinctByRestauranteContaining(String restaurante, Pageable pageRequest);
 }

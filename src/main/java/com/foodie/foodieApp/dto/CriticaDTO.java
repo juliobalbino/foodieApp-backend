@@ -16,6 +16,7 @@ public class CriticaDTO implements Serializable {
 	
 	private Integer id;
 	private String titulo;
+	private String restaurante;
 	private Integer pontuacao;
 	private TipoDeRefeicao tipoDeRefeicao;
 	private String corpo;
@@ -34,6 +35,7 @@ public class CriticaDTO implements Serializable {
 	public CriticaDTO(Critica obj) {
 		id = obj.getId();
 		titulo = obj.getTitulo();
+		restaurante = obj.getRestaurante();
 		pontuacao = obj.getPontuacao();
 		tipoDeRefeicao = obj.getTipoDeRefeicao();
 		corpo = obj.getCorpo();
@@ -57,6 +59,14 @@ public class CriticaDTO implements Serializable {
 
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
+	}
+	
+	public String getRestaurante() {
+		return restaurante;
+	}
+
+	public void setRestaurante(String restaurante) {
+		this.restaurante = restaurante;
 	}
 
 	public Integer getPontuacao() {

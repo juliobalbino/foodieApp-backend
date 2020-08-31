@@ -86,14 +86,27 @@ public class CriticaResource {
 	}
 	
 	@GetMapping(value = "/searchtitulo")
-	public ResponseEntity<Page<CriticaDTO>> searchNome(
+	public ResponseEntity<Page<CriticaDTO>> searchTitulo(
 			@RequestParam(value = "titulo", defaultValue = "") String titulo,
 			@RequestParam(value = "page", defaultValue = "0") Integer page, 
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
 			@RequestParam(value = "orderBy", defaultValue = "data") String orderBy, 
 			@RequestParam(value = "direction", defaultValue = "DESC") String direction) {
 		titulo = URL.decodeParam(titulo);
-		Page<Critica> list = service.searchNome(titulo, page, linesPerPage, orderBy, direction);
+		Page<Critica> list = service.searchTitulo(titulo, page, linesPerPage, orderBy, direction);
+		Page<CriticaDTO> listDto = list.map(obj -> new CriticaDTO(obj));
+		return ResponseEntity.ok().body(listDto);
+	}
+	
+	@GetMapping(value = "/searchrestaurante")
+	public ResponseEntity<Page<CriticaDTO>> searchRestaurante(
+			@RequestParam(value = "restaurante", defaultValue = "") String restaurante,
+			@RequestParam(value = "page", defaultValue = "0") Integer page, 
+			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
+			@RequestParam(value = "orderBy", defaultValue = "data") String orderBy, 
+			@RequestParam(value = "direction", defaultValue = "DESC") String direction) {
+		restaurante = URL.decodeParam(restaurante);
+		Page<Critica> list = service.searchRestaurante(restaurante, page, linesPerPage, orderBy, direction);
 		Page<CriticaDTO> listDto = list.map(obj -> new CriticaDTO(obj));
 		return ResponseEntity.ok().body(listDto);
 	}

@@ -31,12 +31,14 @@ public class Usuario implements Serializable{
 	@Column(unique = true)
 	private String nome;
 	
+	@JsonIgnore
 	@Column(unique = true)
 	private String email;
 	
 	@JsonIgnore
 	private String senha;
 	
+	@JsonIgnore
 	@ElementCollection(fetch = FetchType.EAGER)
 	@CollectionTable(name="PERFIS")
 	private Set<Integer> perfis = new HashSet<>();
@@ -48,8 +50,6 @@ public class Usuario implements Serializable{
 	@JsonIgnore
 	@OneToMany(mappedBy = "autor")
 	private List<Comentario> comentarios = new ArrayList<>();
-	
-	
 	
 	public Usuario() {
 		addPerfil(Perfil.USUARIO);

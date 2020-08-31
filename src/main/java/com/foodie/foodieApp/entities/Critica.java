@@ -25,6 +25,7 @@ public class Critica implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String titulo;
+	private String restaurante;
 	private Integer pontuacao;
 	private Integer tipoDeRefeicao;
 	private String corpo;
@@ -44,9 +45,10 @@ public class Critica implements Serializable{
 	public Critica () {
 	}
 
-	public Critica(Integer id, String titulo, Integer pontuacao, TipoDeRefeicao tipoDeRefeicao, String corpo, Integer curtidas, Instant data, Usuario autor) {
+	public Critica(Integer id, String titulo, String restaurante, Integer pontuacao, TipoDeRefeicao tipoDeRefeicao, String corpo, Integer curtidas, Instant data, Usuario autor) {
 		this.id = id;
 		this.titulo = titulo;
+		this.restaurante = restaurante;
 		this.pontuacao = pontuacao;
 		this.tipoDeRefeicao = (tipoDeRefeicao == null) ? null : tipoDeRefeicao.getCod();
 		this.corpo = corpo;
@@ -69,6 +71,14 @@ public class Critica implements Serializable{
 
 	public void setTitulo(String titulo) {
 		this.titulo = titulo;
+	}
+	
+	public String getRestaurante() {
+		return restaurante;
+	}
+
+	public void setRestaurante(String restaurante) {
+		this.restaurante = restaurante;
 	}
 
 	public Integer getPontuacao() {
@@ -152,4 +162,5 @@ public class Critica implements Serializable{
 			return false;
 		return true;
 	}
+
 }
