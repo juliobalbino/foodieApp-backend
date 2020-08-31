@@ -34,9 +34,6 @@ public class CriticaService {
 	private UsuarioService usuarioService;
 	
 	@Autowired
-	private RestauranteService restauranteService;
-	
-	@Autowired
 	private S3Service s3Service;
 	
 	@Autowired
@@ -73,7 +70,6 @@ public class CriticaService {
 	public Critica insert(Critica obj) {
 		obj.setId(null);
 		obj.setData(Instant.now());
-		obj.setRestaurante(restauranteService.findById(obj.getRestaurante().getId()));
 		obj.setAutor(usuarioService.findById(obj.getAutor().getId()));
 		return repository.save(obj);
 	}
@@ -111,13 +107,13 @@ public class CriticaService {
 		}
 	}
 	
-	public Page<Critica> searchNome(String nome, Integer page, Integer linesPerPage, String orderBy, String direction) {
+	public Page<Critica> searchNome(String titulo, Integer page, Integer linesPerPage, String orderBy, String direction) {
 		PageRequest pageRequest = PageRequest.of(page, linesPerPage, Direction.valueOf(direction), orderBy);
-		return repository.findDistinctByNomeContaining(nome, pageRequest);
+		return repository.findDistinctByTituloContaining(titulo, pageRequest);
 	}
 	
 	private void updateData(Critica newObj, Critica obj) {
-		newObj.setNome(obj.getNome());
+		newObj.setTitulo(obj.getTitulo());
 		newObj.setCorpo(obj.getCorpo());
 		newObj.setCurtidas(obj.getCurtidas());
 	}

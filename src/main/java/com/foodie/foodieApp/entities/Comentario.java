@@ -25,10 +25,6 @@ public class Comentario implements Serializable{
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant data;
 	
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name = "restaurante_id")
-	private Restaurante restaurante;
 	
 	@JsonIgnore
 	@ManyToOne
@@ -42,11 +38,10 @@ public class Comentario implements Serializable{
 	public Comentario() {
 	}
 
-	public Comentario(Integer id, String texto, Instant data, Restaurante restaurante, Critica critica, Usuario autor) {
+	public Comentario(Integer id, String texto, Instant data, Critica critica, Usuario autor) {
 		this.id = id;
 		this.texto = texto;
 		this.data = data;
-		this.restaurante = restaurante;
 		this.critica = critica;
 		this.autor = autor;
 	}
@@ -75,13 +70,6 @@ public class Comentario implements Serializable{
 		this.data = data;
 	}
 	
-	public Restaurante getRestaurante() {
-		return restaurante;
-	}
-
-	public void setRestaurante(Restaurante restaurante) {
-		this.restaurante = restaurante;
-	}
 
 	public Critica getCritica() {
 		return critica;

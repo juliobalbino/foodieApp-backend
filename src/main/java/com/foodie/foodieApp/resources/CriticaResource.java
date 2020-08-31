@@ -85,15 +85,15 @@ public class CriticaResource {
 		return ResponseEntity.noContent().build();
 	}
 	
-	@GetMapping(value = "/searchnome")
+	@GetMapping(value = "/searchtitulo")
 	public ResponseEntity<Page<CriticaDTO>> searchNome(
-			@RequestParam(value = "nome", defaultValue = "") String nome,
+			@RequestParam(value = "titulo", defaultValue = "") String titulo,
 			@RequestParam(value = "page", defaultValue = "0") Integer page, 
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
-			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 
-			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
-		nome = URL.decodeParam(nome);
-		Page<Critica> list = service.searchNome(nome, page, linesPerPage, orderBy, direction);
+			@RequestParam(value = "orderBy", defaultValue = "data") String orderBy, 
+			@RequestParam(value = "direction", defaultValue = "DESC") String direction) {
+		titulo = URL.decodeParam(titulo);
+		Page<Critica> list = service.searchNome(titulo, page, linesPerPage, orderBy, direction);
 		Page<CriticaDTO> listDto = list.map(obj -> new CriticaDTO(obj));
 		return ResponseEntity.ok().body(listDto);
 	}

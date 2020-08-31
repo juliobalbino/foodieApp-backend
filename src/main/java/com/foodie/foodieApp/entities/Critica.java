@@ -15,7 +15,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.foodie.foodieApp.entities.enums.TipoDeRefeicao;
 
 @Entity
@@ -25,7 +24,7 @@ public class Critica implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private String nome;
+	private String titulo;
 	private Integer pontuacao;
 	private Integer tipoDeRefeicao;
 	private String corpo;
@@ -37,11 +36,6 @@ public class Critica implements Serializable{
 	@ManyToOne
 	@JoinColumn(name = "autor_id")
 	private Usuario autor;
-
-	@JsonIgnore
-	@ManyToOne
-	@JoinColumn(name = "restaurante_id")
-	private Restaurante restaurante;
 	
 	@OneToMany(mappedBy = "critica", cascade = CascadeType.ALL)
 	private List<Comentario> comentarios = new ArrayList<>();
@@ -50,16 +44,15 @@ public class Critica implements Serializable{
 	public Critica () {
 	}
 
-	public Critica(Integer id, String nome, Integer pontuacao, TipoDeRefeicao tipoDeRefeicao, String corpo, Integer curtidas, Instant data, Usuario autor, Restaurante restaurante) {
+	public Critica(Integer id, String titulo, Integer pontuacao, TipoDeRefeicao tipoDeRefeicao, String corpo, Integer curtidas, Instant data, Usuario autor) {
 		this.id = id;
-		this.nome = nome;
+		this.titulo = titulo;
 		this.pontuacao = pontuacao;
 		this.tipoDeRefeicao = (tipoDeRefeicao == null) ? null : tipoDeRefeicao.getCod();
 		this.corpo = corpo;
 		this.curtidas = curtidas;
 		this.data = data;
 		this.autor = autor;
-		this.restaurante = restaurante;
 	}
 
 	public Integer getId() {
@@ -70,12 +63,12 @@ public class Critica implements Serializable{
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public String getTitulo() {
+		return titulo;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
 	}
 
 	public Integer getPontuacao() {
@@ -124,14 +117,6 @@ public class Critica implements Serializable{
 
 	public void setAutor(Usuario autor) {
 		this.autor = autor;
-	}
-
-	public Restaurante getRestaurante() {
-		return restaurante;
-	}
-
-	public void setRestaurante(Restaurante restaurante) {
-		this.restaurante = restaurante;
 	}
 	
 	public List<Comentario> getComentarios() {

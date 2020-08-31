@@ -45,8 +45,8 @@ public class ComentarioResource {
 	public ResponseEntity<Page<ComentarioDTO>> findPage(
 			@RequestParam(value = "page", defaultValue = "0") Integer page, 
 			@RequestParam(value = "linesPerPage", defaultValue = "24") Integer linesPerPage, 
-			@RequestParam(value = "orderBy", defaultValue = "nome") String orderBy, 
-			@RequestParam(value = "direction", defaultValue = "ASC") String direction) {
+			@RequestParam(value = "orderBy", defaultValue = "data") String orderBy, 
+			@RequestParam(value = "direction", defaultValue = "DESC") String direction) {
 		Page<Comentario> list = service.findPage(page, linesPerPage, orderBy, direction);
 		Page<ComentarioDTO> listDto = list.map(obj -> new ComentarioDTO(obj));
 		return ResponseEntity.ok().body(listDto);
