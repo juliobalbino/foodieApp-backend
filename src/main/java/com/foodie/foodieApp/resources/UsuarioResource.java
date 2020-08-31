@@ -20,6 +20,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.foodie.foodieApp.dto.UsuarioDTO;
 import com.foodie.foodieApp.dto.UsuarioNewDTO;
+import com.foodie.foodieApp.entities.Critica;
 import com.foodie.foodieApp.entities.Usuario;
 import com.foodie.foodieApp.resources.utils.URL;
 import com.foodie.foodieApp.services.UsuarioService;
@@ -89,6 +90,12 @@ public class UsuarioResource {
 		Page<Usuario> list = service.searchNome(nome, page, linesPerPage, orderBy, direction);
 		Page<UsuarioDTO> listDto = list.map(obj -> new UsuarioDTO(obj));
 		return ResponseEntity.ok().body(listDto);
+	}
+	
+	@GetMapping(value = "/{id}/criticas")
+	public ResponseEntity<List<Critica>> findCriticas(@PathVariable Integer id) {
+		Usuario obj = service.findById(id);
+		return ResponseEntity.ok().body(obj.getCriticas());
 	}
 	
 	@RequestMapping(value = "/picture", method=RequestMethod.POST)

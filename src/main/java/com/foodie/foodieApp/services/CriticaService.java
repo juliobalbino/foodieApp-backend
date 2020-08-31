@@ -135,7 +135,7 @@ public class CriticaService {
 		}
 		
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
-		String fileName = prefix + obj.getId() + ".jpg";
+		String fileName = "autor-" + obj.getAutor().getId() + prefix + obj.getId() + ".jpg";
 		
 		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
 	}	
