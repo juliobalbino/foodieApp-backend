@@ -3,6 +3,8 @@ package com.foodie.foodieApp.dto;
 import java.io.Serializable;
 import java.time.Instant;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.foodie.foodieApp.entities.Comentario;
 import com.foodie.foodieApp.entities.Usuario;
@@ -11,12 +13,15 @@ public class ComentarioDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private Integer id;
+	
+	@Length(min = 3, max = 200, message = "O tamanho deve ser entre 3 e 200 caracteres")
 	private String texto;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant data;
 	
 	private Usuario autor;
+	
 
 	public ComentarioDTO () {
 	}

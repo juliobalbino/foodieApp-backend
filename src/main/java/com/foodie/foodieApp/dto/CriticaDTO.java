@@ -5,6 +5,10 @@ import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.foodie.foodieApp.entities.Comentario;
 import com.foodie.foodieApp.entities.Critica;
@@ -15,10 +19,22 @@ public class CriticaDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@Length(min = 5, max = 60, message = "O tamanho deve ser entre 5 e 60 caracteres")
 	private String titulo;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@Length(min = 5, max = 60, message = "O tamanho deve ser entre 5 e 60 caracteres")
 	private String restaurante;
+	
 	private Integer pontuacao;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private TipoDeRefeicao tipoDeRefeicao;
+	
+	@Length(min = 3, max = 200, message = "O tamanho deve ser entre 3 e 200 caracteres")
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String corpo;
 	private Integer curtidas;
 	

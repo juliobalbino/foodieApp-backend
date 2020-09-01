@@ -1,5 +1,6 @@
 package com.foodie.foodieApp.services;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
+import com.foodie.foodieApp.dto.ComentarioDTO;
 import com.foodie.foodieApp.entities.Comentario;
 import com.foodie.foodieApp.entities.enums.Perfil;
 import com.foodie.foodieApp.repositories.ComentarioRepository;
@@ -23,6 +25,12 @@ public class ComentarioService {
 
 	@Autowired
 	private ComentarioRepository repository;
+	
+	@Autowired
+	private CriticaService criticaService;
+	
+	@Autowired
+	private UsuarioService usuarioService;
 	
 	public List<Comentario> findAll() {
 		return repository.findAll();
@@ -41,6 +49,9 @@ public class ComentarioService {
 	
 	public Comentario insert(Comentario obj) {
 		obj.setId(null);
+		obj.setCritica(criticaService.findById(obj.getCritica().getId()));
+		obj.setData(Instant.now());
+		obj.setAutor(usuarioService.findById(obj.getAutor().getId()));
 		return repository.save(obj);
 	}
 	
@@ -79,5 +90,9 @@ public class ComentarioService {
 	
 	private void updateData(Comentario newObj, Comentario obj) {
 		newObj.setTexto(obj.getTexto());
+	}
+	
+	public Comentario fromDTO(ComentarioDTO objDto) {
+		return new Comentario(objDto.getId(), objDto.getTexto(), objDto.getData(), null, objDto.getAutor());
 	}
 }

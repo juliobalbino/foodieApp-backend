@@ -15,6 +15,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.foodie.foodieApp.dto.CriticaDTO;
 import com.foodie.foodieApp.entities.Critica;
 import com.foodie.foodieApp.entities.Usuario;
 import com.foodie.foodieApp.entities.enums.Perfil;
@@ -121,6 +122,10 @@ public class CriticaService {
 		newObj.setTitulo(obj.getTitulo());
 		newObj.setCorpo(obj.getCorpo());
 		newObj.setCurtidas(obj.getCurtidas());
+	}
+	
+	public Critica fromDTO(CriticaDTO objDto) {
+		return new Critica(objDto.getId(), objDto.getTitulo(), objDto.getRestaurante(), objDto.getPontuacao(), objDto.getTipoDeRefeicao(), objDto.getCorpo(), objDto.getCurtidas(), objDto.getData(), objDto.getAutor());
 	}
 	
 	public URI uploadCriticaPicture(Integer id, MultipartFile multipartFile) {

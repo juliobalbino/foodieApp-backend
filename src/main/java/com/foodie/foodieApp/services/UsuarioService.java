@@ -105,8 +105,7 @@ public class UsuarioService {
 	}
 	
 	public Usuario fromDTO(UsuarioNewDTO objDto) {
-		Usuario us = new Usuario(null, objDto.getNome(), objDto.getEmail(), pe.encode(objDto.getSenha()));
-		return us;
+		return new Usuario(null, objDto.getNome(), objDto.getEmail(), pe.encode(objDto.getSenha()));
 	}
 	
 	private void updateData(Usuario newObj, Usuario obj) {

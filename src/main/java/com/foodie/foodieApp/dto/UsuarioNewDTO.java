@@ -2,32 +2,34 @@ package com.foodie.foodieApp.dto;
 
 import java.io.Serializable;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
+import org.hibernate.validator.constraints.Length;
+
 import com.foodie.foodieApp.entities.Usuario;
 
 public class UsuarioNewDTO implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
-	private Integer id;
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@Length(min = 3, max = 10, message = "O tamanho deve ser entre 3 e 10 caracteres")
 	private String nome;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
+	@Email(message = "Email inválido")
 	private String email;
+	
+	@NotEmpty(message = "Preenchimento obrigatório")
 	private String senha;
 	
 	public UsuarioNewDTO() {
 	}
 	
 	public UsuarioNewDTO(Usuario obj) {
-		id = obj.getId();
 		nome = obj.getNome();
 		email = obj.getEmail();
 		senha = obj.getSenha();
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public String getNome() {
