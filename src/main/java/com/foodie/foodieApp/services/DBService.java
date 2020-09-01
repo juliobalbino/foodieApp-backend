@@ -38,8 +38,8 @@ public class DBService {
 	Usuario u3 = new Usuario(null, "Julio Balbino", "julio4110@hotmail.com", pe.encode("123"));
 	u3.addPerfil(Perfil.ADMIN);
 	
-	Critica cr1 = new Critica(null, "Restaurante incrível", "Paris6",10, TipoDeRefeicao.JANTAR, "Fui no Paris6 e Amei, muito boa a comida", 9, Instant.now(), u1);
-	Critica cr2 = new Critica(null, "Outback Horrivel", "Outback", 2, TipoDeRefeicao.ALMOCO, "Fui ao Outback no ABC e Odiei, comida tudo doce", 9, Instant.parse("2019-06-20T19:32:06Z"), u2);
+	Critica cr1 = new Critica(null, "Restaurante incrível", "Paris6",10, TipoDeRefeicao.JANTAR, "Fui no Paris6 e Amei, muito boa a comida", 0, Instant.now(), u1);
+	Critica cr2 = new Critica(null, "Outback Horrivel", "Outback", 2, TipoDeRefeicao.ALMOCO, "Fui ao Outback no ABC e Odiei, comida tudo doce", 0, Instant.parse("2019-06-20T19:32:06Z"), u2);
 	
 	Comentario c1 = new Comentario(null, "Bom lugar, eu já fui lá", Instant.parse("2019-06-20T19:10:32Z"), cr1, u1);
 	Comentario c2 = new Comentario(null, "Gostei da publicação, fiquei com vontade de ir", Instant.parse("2019-06-20T19:32:06Z"), cr1, u2);

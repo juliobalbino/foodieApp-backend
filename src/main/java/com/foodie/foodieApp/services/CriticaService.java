@@ -138,5 +138,35 @@ public class CriticaService {
 		String fileName = "autor-" + obj.getAutor().getId() + prefix + obj.getId() + ".jpg";
 		
 		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
-	}	
+	}
+	
+	public void like(Integer id) {
+		
+		Critica obj = findById(id);
+		
+		UserSS user = UserService.authenticated();
+		
+		if (user == null) {
+			throw new AuthorizationException("É necessário estar logado");
+		}
+		
+		obj.getCurtidores().add(user.getId());
+		obj.setCurtidas(obj.getCurtidores().size());
+		repository.save(obj);
+	}
+	
+	public void unlike(Integer id) {
+		
+		Critica obj = findById(id);
+		
+		UserSS user = UserService.authenticated();
+		
+		if (user == null) {
+			throw new AuthorizationException("É necessário estar logado");
+		}
+		
+		obj.getCurtidores().remove(user.getId());
+		obj.setCurtidas(obj.getCurtidores().size());
+		repository.save(obj);
+	}
 }

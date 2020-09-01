@@ -112,8 +112,20 @@ public class CriticaResource {
 	}
 	
 	@RequestMapping(value = "/{id}/picture", method=RequestMethod.POST)
-	public ResponseEntity<Void> uploadProfilePicture(@PathVariable Integer id, @RequestParam(name="file") MultipartFile file) {
+	public ResponseEntity<Void> uploadCriticaPicture(@PathVariable Integer id, @RequestParam(name="file") MultipartFile file) {
 		URI uri = service.uploadCriticaPicture(id,file);
 		return ResponseEntity.created(uri).build();
+	}
+	
+	@RequestMapping(value = "/{id}/like", method = RequestMethod.POST)
+	public ResponseEntity<Void> like(@PathVariable Integer id) {
+		service.like(id);
+		return ResponseEntity.noContent().build();
+	}
+	
+	@RequestMapping(value = "/{id}/unlike", method = RequestMethod.POST)
+	public ResponseEntity<Void> unlike(@PathVariable Integer id) {
+		service.unlike(id);
+		return ResponseEntity.noContent().build();
 	}
 }

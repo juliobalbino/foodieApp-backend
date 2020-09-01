@@ -3,10 +3,15 @@ package com.foodie.foodieApp.entities;
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,6 +35,10 @@ public class Critica implements Serializable{
 	private Integer tipoDeRefeicao;
 	private String corpo;
 	private Integer curtidas;
+	
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name="CURTIDORES")
+	private Set<Integer> curtidores = new HashSet<>();
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant data;
@@ -113,6 +122,14 @@ public class Critica implements Serializable{
 		this.curtidas = curtidas;
 	}
 	
+	public Set<Integer> getCurtidores() {
+		return curtidores;
+	}
+
+	public void setCurtidores(Set<Integer> curtidores) {
+		this.curtidores = curtidores;
+	}
+	
 	public Instant getData() {
 		return data;
 	}
@@ -162,5 +179,4 @@ public class Critica implements Serializable{
 			return false;
 		return true;
 	}
-
 }
